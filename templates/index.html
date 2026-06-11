@@ -1,38 +1,39 @@
+<!-- templates/index.html -->
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<title></title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	</head>
-	<body>
-        <div class="container">
-            <h1 style="text-align:center;">Успеваемость студентов</h1>
+<head>
+    <meta charset="utf-8">
+    <title>Успеваемость студентов</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align:center;">Успеваемость студентов</h1>
 
-            <table class="table table-striped">
-                <thead>
+        <a href="{% url 'student_create' %}" class="btn btn-primary" style="margin-bottom:20px;">Добавить студента</a>
+
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                  <th>#</th>
-                  <th>ФИО</th>
+                    <th>#</th>
+                    <th>ФИО</th>
                     {% for subject in subjects %}
-                      <th>{{subject}}</th>
+                        <th>{{ subject.name }}</th>
                     {% endfor %}
                 </tr>
-                </thead>
-                <tbody>
-                    {% for statistics in student_statistics %}
-                        <tr>
-                            <th scope="row">{{statistics.student.id}}</th>
-                            <td>{{statistics.student.full_name}}</td>
-                             {% for score in statistics.scores %}
-                                <td>{{score}}</td>
-                              {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-	</body>
+            </thead>
+            <tbody>
+                {% for statistics in student_statistics %}
+                    <tr>
+                        <th scope="row">{{ statistics.student.id }}</th>
+                        <td>{{ statistics.student.full_name }}</td>
+                        {% for score in statistics.scores %}
+                            <td>{{ score }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
 </html>
