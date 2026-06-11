@@ -1,17 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>HELLO, WORLD!</h1>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius eum exercitationem repellendus tenetur! Animi
-    consequuntur cumque et facere iste magnam maxime minima, natus necessitatibus nemo nobis numquam odio officia
-    pariatur perferendis ratione, reiciendis rem sed, sit temporibus. A accusamus atque culpa dignissimos distinctio
-    doloribus eos ex illo, illum ipsum magni perferendis quaerat repudiandae rerum totam ullam velit voluptatum?
-    Accusamus aspernatur commodi deserunt doloribus eveniet explicabo fuga ipsam modi natus nesciunt odio odit placeat
-    quae quasi quis quisquam quod quos sit, ullam voluptas. Ad doloribus, facere magnam neque nostrum odit quaerat
-    tempore voluptatibus. A accusamus enim magnam minus perferendis. Aspernatur, totam!</p>
-</body>
-</html>s
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+        <div class="container">
+            <h1 style="text-align:center;">Успеваемость студентов</h1>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th>#</th>
+                  <th>ФИО</th>
+                    {% for subject in subjects %}
+                      <th>{{subject}}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                    {% for statistics in student_statistics %}
+                        <tr>
+                            <th scope="row">{{statistics.student.id}}</th>
+                            <td>{{statistics.student.full_name}}</td>
+                             {% for score in statistics.scores %}
+                                <td>{{score}}</td>
+                              {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+	</body>
+</html>
