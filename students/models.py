@@ -6,10 +6,10 @@ class Student(models.Model):
     full_name = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.full_name
+        return f'{self.student_id} - {self.full_name}'
 
     def average_score(self):
-        avg = self.grade_set.aggregate(Avg('grade'))['grade__avg']
+        avg = self.grade_set.aggregate(Avg('value'))['value__avg']
         return avg if avg else 0
 
 class Subject(models.Model):
@@ -21,7 +21,7 @@ class Subject(models.Model):
 class Grade(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    grade = models.IntegerField()
+    value = models.FloatField()
 
     def __str__(self):
-        return f"{self.student.full_name} - {self.subject.name}: {self.grade}"
+        return f'{self.student.full_name} - {self.subject.name}: {self.value}'
