@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% if object %}Изменить предмет{% else %}Добавить предмет{% endif %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>{% if object %}Изменить предмет{% else %}Добавить предмет{% endif %}</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Название предмета:</label>
+                <input type="text" name="name" value="{{ object.name|default:'' }}" class="form-control" style="width: 300px;">
+            </div>
+            <button type="submit" class="btn btn-success">Сохранить</button>
+            <a href="{% url 'index' %}" class="btn btn-default">Отмена</a>
+        </form>
+    </div>
+</body>
+</html>

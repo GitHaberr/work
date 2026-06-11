@@ -1,16 +1,28 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>Успеваемость студентов</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <style>
+    .table th, .table td {
+        white-space: nowrap;
+        padding: 8px 5px;
+        vertical-align: middle;
+    }
+    .btn-xs {
+        padding: 0px 4px;
+    }
+</style>
 </head>
 <body>
-    <div class="container">
+    <div style="width: 95%; margin: 0 auto; overflow-x: auto;">
         <h1 style="text-align:center;">Успеваемость студентов</h1>
 
-        <a href="{% url 'student_create' %}" class="btn btn-primary" style="margin-bottom:20px;">Добавить студента</a>
+        <div style="margin-bottom:20px;">
+            <a href="{% url 'student_create' %}" class="btn btn-primary">Добавить студента</a>
+            <a href="{% url 'subject_create' %}" class="btn btn-success" style="float: right;">Добавить предмет</a>
+        </div>
 
         <table class="table table-striped">
             <thead>
@@ -18,19 +30,35 @@
                     <th>#</th>
                     <th>ФИО</th>
                     {% for subject in subjects %}
-                        <th>{{ subject.name }}</th>
+                        <th>
+                            <a href="{% url 'subject_update' subject.pk %}" class="btn btn-xs">✎</a>
+                            {{ subject.name|slice:":5" }}
+                            <a href="{% url 'subject_delete' subject.pk %}" class="btn btn-xs">x</a>
+
+                        </th>
                     {% endfor %}
+                    <th>
+                        <a href="?sort={% if current_sort == 'best' %}worst{% elif current_sort == 'worst' %}default{% else %}best{% endif %}" class="btn btn-primary">
+                            Сред. балл
+                        </a>
+                    </th>
+                    <th>Действия</th>
                 </tr>
             </thead>
             <tbody>
                 {% for statistics in student_statistics %}
-                    <tr>
-                        <th scope="row">{{ statistics.student.id }}</th>
-                        <td>{{ statistics.student.full_name }}</td>
-                        {% for score in statistics.scores %}
-                            <td>{{ score }}</td>
-                        {% endfor %}
-                    </tr>
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ statistics.student.full_name }}</td>
+                    {% for score in statistics.scores %}
+                        <td>{{ score }}</td>
+                    {% endfor %}
+                    <td>{{ statistics.average }}</td>
+                    <td>
+                        <a href="{% url 'student_update' statistics.student.pk %}" class="btn btn-warning btn-sm">Изменить</a>
+                        <a href="{% url 'student_delete' statistics.student.pk %}" class="btn btn-danger btn-sm">Удалить</a>
+                    </td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
